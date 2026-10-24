@@ -1,0 +1,113 @@
+/* ================= PREMIUM PLAYER STYLES ================= */
+#watch-page {
+    background: transparent !important; min-height: 100vh; width: 100%;
+    position: fixed; top: 0; left: 0; z-index: 100; overflow-y: auto;
+}
+.ad-spacer { width: 100%; height: 60px; background: transparent; }
+:root { --primary: #4f46e5; --panel-bg: rgba(30, 41, 59, 0.85); }
+
+.player-wrapper {
+    width: 100%; background: #000; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8), 0 0 20px rgba(79,70,229,0.15); 
+    position: relative; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 24px;
+    transition: all 0.3s ease;
+}
+.video-screen { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; }
+.video-screen video, .video-screen iframe, .video-screen div#embedContainer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+.security-mask { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: transparent; z-index: 50; }
+.video-loader {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    z-index: 40; display: none; pointer-events: none;
+}
+.spinner {
+    width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.1);
+    border-radius: 50%; border-top-color: var(--primary);
+    animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Premium Controls with Glassmorphism */
+.controls { 
+    background: var(--panel-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    padding: 16px 24px; display: flex; flex-direction: column; gap: 16px; 
+    border-top: 1px solid rgba(255,255,255,0.05); z-index: 60; position: relative; 
+}
+
+.progress-row { display: flex; align-items: center; gap: 15px; width: 100%; position: relative; }
+.time-txt { font-size: 13px; color: #cbd5e1; min-width: 55px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.time-txt.right { text-align: right; }
+
+/* Interactive Range Slider */
+.slider-container { position: relative; flex-grow: 1; display: flex; align-items: center; height: 20px; cursor: pointer; }
+.seek-tooltip { position: absolute; top: -30px; background: rgba(15, 23, 42, 0.9); color: #fff; font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 6px; transform: translateX(-50%); display: none; pointer-events: none; white-space: nowrap; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 10px rgba(0,0,0,0.5); z-index: 10;}
+.slider-container:hover .seek-tooltip { display: block; }
+
+input[type="range"] { 
+    width: 100%; height: 5px; background: rgba(255,255,255,0.2); border-radius: 5px; 
+    outline: none; -webkit-appearance: none; transition: height 0.2s; position: absolute; z-index: 2;
+}
+input[type="range"]:hover { height: 7px; }
+input[type="range"]::-webkit-slider-thumb { 
+    -webkit-appearance: none; width: 16px; height: 16px; background: #fff; border-radius: 50%; 
+    box-shadow: 0 0 10px rgba(79, 70, 229, 0.8); transition: transform 0.2s; cursor: grab;
+}
+input[type="range"]::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.2); }
+.progress-fill { position: absolute; left: 0; top: 50%; transform: translateY(-50%); height: 5px; background: var(--primary); border-radius: 5px; z-index: 1; pointer-events: none; transition: height 0.2s; }
+.slider-container:hover .progress-fill { height: 7px; }
+
+.buttons-row { display: flex; align-items: center; justify-content: space-between; position: relative; padding: 5px 0; }
+
+/* Center Play Controls & Next/Prev Episode - FIXED SPACING */
+.center-controls { 
+    position: absolute; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; /* Reduced gap to bring buttons closer */
+    width: auto;
+    white-space: nowrap;
+}
+
+.skip-btn { 
+    background: none; border: none; color: #cbd5e1; font-size: 18px; 
+    cursor: pointer; display: flex; align-items: center; justify-content: center; 
+    position: relative; transition: color 0.2s, transform 0.2s; padding: 4px;
+}
+.skip-btn:hover { color: #fff; transform: scale(1.1); }
+.skip-btn span { font-size: 8px; position: absolute; margin-top: 24px; font-weight: 900; color: #94a3b8; }
+
+.play-btn { 
+    width: 48px; height: 48px; border-radius: 50%; 
+    background: linear-gradient(135deg, #4f46e5, #3b82f6); border: none; color: white; 
+    font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; 
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin: 0 4px; /* Slight margin around play button only */
+}
+.play-btn:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(79, 70, 229, 0.6); }
+.play-btn:active { transform: scale(0.95); }
+
+.ep-nav-btn { 
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
+    color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; 
+    align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; font-size: 12px;
+}
+.ep-nav-btn:hover:not(:disabled) { background: var(--primary); border-color: var(--primary); transform: scale(1.1); }
+.ep-nav-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+
+.vol-btn { background: none; border: none; color: #cbd5e1; font-size: 20px; cursor: pointer; transition: color 0.2s; }
+.vol-btn:hover { color: #fff; }
+
+.server-box { text-align: center; width: 100%; margin-top: 10px; }
+.server-label { display: block; margin-bottom: 12px; color: #94a3b8; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+.btn-list { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+.sv-btn { 
+    background: rgba(30, 41, 59, 0.6); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.1); 
+    padding: 10px 24px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; gap: 10px; 
+    transition: all 0.3s ease; font-size: 13px; font-weight: 600; backdrop-filter: blur(10px);
+}
+.sv-btn:hover { border-color: var(--primary); color: #fff; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+.sv-btn.active { 
+    background: linear-gradient(135deg, var(--primary), #3b82f6); color: #fff; border-color: transparent; 
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4); text-shadow: 0 2px 4px rgba(0,0,0,0.3); 
+}

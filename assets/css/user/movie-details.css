@@ -1,0 +1,72 @@
+/* AD Container Helper */
+.ad-container { display: flex; justify-content: center; align-items: center; margin: 10px 0; overflow: hidden; min-height: 50px; }
+
+/* Movie Details & Episode List Styles */
+@keyframes slowPan {
+    0% { transform: scale(1.05) translateY(0); }
+    100% { transform: scale(1.12) translateY(-2%); }
+}
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.5); border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.8); }
+
+.ep-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- NEW: Download Button Animation --- */
+.download-btn {
+    background: linear-gradient(145deg, #059669, #047857);
+    border: none;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(5, 150, 105, 0.4);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+.download-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+}
+.download-btn:hover {
+    transform: scale(1.15) rotate(360deg);
+    box-shadow: 0 6px 15px rgba(5, 150, 105, 0.6);
+}
+.download-btn:hover::before {
+    left: 100%;
+}
+.download-btn:active {
+    transform: scale(0.95);
+}
+.download-btn i {
+    transition: all 0.3s ease;
+}
+.download-btn:hover i {
+    transform: translateY(3px);
+}
+.download-btn.downloading {
+    animation: pulse-download 1.5s infinite;
+}
+@keyframes pulse-download {
+    0% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(5, 150, 105, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); }
+}
